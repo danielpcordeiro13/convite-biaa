@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Convite para a Bia 💖</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #fff7fb, #ffe5ef, #fff1f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 20px;
+      color: #6d1f3d;
+    }
+
+    .flower {
+      position: fixed;
+      top: -40px;
+      font-size: 20px;
+      opacity: 0.75;
+      animation: cair linear forwards;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes cair {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .card {
+      width: 100%;
+      max-width: 430px;
+      min-height: 540px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-radius: 32px;
+      padding: 32px 24px;
+      box-shadow: 0 20px 50px rgba(255, 140, 170, 0.35);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      animation: aparecer 0.5s ease;
+    }
+
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: scale(0.96) translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .emoji-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #ffd1df, #f4d7ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+      margin: 0 auto 24px;
+      box-shadow: 0 10px 25px rgba(255, 150, 180, 0.25);
+    }
+
+    h1 {
+      font-size: 30px;
+      line-height: 1.15;
+      color: #7b1f42;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #8c5670;
+      margin-bottom: 24px;
+      line-height: 1.45;
+    }
+
+    button, a.button-link {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 15px 26px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: 0.2s ease;
+      touch-action: manipulation;
+      user-select: none;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .primary {
+      background: #ff8daf;
+      color: white;
+      box-shadow: 0 8px 18px rgba(255, 115, 155, 0.35);
+    }
+
+    .primary:active {
+      transform: scale(0.96);
+    }
+
+    .answer-area {
+      height: 210px;
+      position: relative;
+      margin-top: 20px;
+    }
+
+    #yesBtn {
+      position: absolute;
+      left: 45px;
+      top: 65px;
+      background: #ff8daf;
+      color: white;
+      z-index: 2;
+    }
+
+    #noBtn {
+      position: absolute;
+      left: 225px;
+      top: 65px;
+      background: #dcc5ff;
+      color: #6c3c86;
+      z-index: 3;
+    }
+
+    #yesBtn.yes-big {
+      left: 50%;
+      top: 45px;
+      transform: translateX(-50%);
+      font-size: 25px;
+      padding: 25px 48px;
+      animation: pulsar 0.9s infinite alternate;
+    }
+
+    @keyframes pulsar {
+      from {
+        transform: translateX(-50%) scale(1);
+      }
+      to {
+        transform: translateX(-50%) scale(1.08);
+      }
+    }
+
+    .attempts {
+      font-size: 13px;
+      color: #a56b84;
+      margin-top: 8px;
+      min-height: 22px;
+    }
+
+    .food-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .food-option {
+      background: #f8efff;
+      color: #6d1f3d;
+      padding: 18px 10px;
+      border-radius: 24px;
+      min-height: 95px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 20px rgba(180, 120, 200, 0.15);
+    }
+
+    .food-option span {
+      font-size: 28px;
+    }
+
+    .food-option.selected {
+      background: #ffb0c9;
+      color: white;
+      transform: scale(1.03);
+    }
+
+    .form-group {
+      text-align: left;
+      margin: 22px 0;
+    }
+
+    label {
+      font-weight: bold;
+      color: #7b1f42;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px 18px;
+      border-radius: 18px;
+      border: 2px solid #f3d8e4;
+      font-size: 16px;
+      color: #7b1f42;
+      background: #fffafd;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #ff8daf;
+    }
+
+    .summary {
+      background: #fff1f7;
+      border-radius: 24px;
+      padding: 18px;
+      margin: 22px 0;
+      text-align: left;
+      color: #7b1f42;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .whatsapp-button {
+      width: 100%;
+      margin-top: 20px;
+      font-size: 17px;
+      padding: 18px 24px;
+    }
+
+    .small-note {
+      font-size: 13px;
+      color: #a56b84;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 420px) {
+      body {
+        padding: 14px;
+      }
+
+      .card {
+        min-height: 560px;
+        padding: 28px 18px;
+      }
+
+      h1 {
+        font-size: 27px;
+      }
+
+      #yesBtn {
+        left: 24px;
+      }
+
+      #noBtn {
+        left: 185px;
+      }
+
+      .food-grid {
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="card" id="screenStart">
+    <div class="emoji-img">💌</div>
+    <h1>Oi, Bia...</h1>
+    <p>
+      Eu fiz uma coisinha especialmente pra você.
+      Mas cuidado: algumas respostas talvez não queiram ser clicadas 😌
+    </p>
+
+    <button class="primary" onclick="goTo('screenQuestion')">
+      começar 💖
+    </button>
+  </section>
+
+  <section class="card hidden" id="screenQuestion">
+    <div class="emoji-img">🥺</div>
+    <h1>🌸 Bia, você aceita ir em um date comigo? 🌸</h1>
+    <p>Responda com muita sinceridade.</p>
+
+    <div class="answer-area" id="answerArea">
+      <button id="yesBtn" onclick="sayYes()">SIM 💖</button>
+      <button id="noBtn">não... 🙈</button>
+    </div>
+
+    <div class="attempts" id="attemptText"></div>
+  </section>
+
+  <section class="card hidden" id="screenSurprise">
+    <div class="emoji-img">😭</div>
+    <h1>WAIT...</h1>
+    <p>
+      Você realmente disse sim?? Eu estava muito preparado pra você tentar clicar no não.
+    </p>
+
+    <button class="primary" onclick="goTo('screenFood')">
+      okay okay! →
+    </button>
+  </section>
+
+  <section class="card hidden" id="screenFood">
+    <div class="emoji-img">🍽️</div>
+    <h1>O que a gente vai comer?</h1>
+    <p>Escolhe o lugar do nosso date.</p>
+
+    <div class="food-grid">
+      <button class="food-option" onclick="selectFood(this, 'Kenkyo')">
+        <span>🍣</span>
+        Kenkyo
+      </button>
+
+      <button class="food-option" onclick="selectFood(this, 'Japa Mix')">
+        <span>🍱</span>
+        Japa Mix
+      </button>
+
+      <button class="food-option" onclick="selectFood(this, 'El Mare')">
+        <span>🍝</span>
+        El Mare
+      </button>
+
+      <button class="food-option" onclick="selectFood(this, 'Coco Bambu')">
+        <span>🦐</span>
+        Coco Bambu
+      </button>
+    </div>
+
+    <br>
+
+    <button class="primary" onclick="confirmFood()">
+      continuar →
+    </button>
+  </section>
+
+  <section class="card hidden" id="screenDate">
+    <div class="emoji-img">📅</div>
+    <h1>Então... quando você está livre?</h1>
+    <p>Agora marca o dia e o horário do nosso date.</p>
+
+    <div class="form-group">
+      <label>Escolha o dia ✨</label>
+      <input type="date" id="dateInput">
+    </div>
+
+    <div class="form-group">
+      <label>Escolha o horário 💕</label>
+      <input type="time" id="timeInput">
+    </div>
+
+    <button class="primary" onclick="finishDate()">
+      marcar o date 💘
+    </button>
+  </section>
+
+  <section class="card hidden" id="screenWhatsapp">
+    <div class="emoji-img">💖</div>
+    <h1>Date marcado.</h1>
+    <p>
+      Agora só falta mandar a resposta pro Daniel.
+    </p>
+
+    <div class="summary" id="summaryBox"></div>
+
+    <a id="whatsappBtn" class="button-link primary whatsapp-button" target="_blank">
+      mandar respostas pelo WhatsApp 💌
+    </a>
+
+    <p class="small-note">
+      Aperta o botão acima pra ele receber certinho o que você escolheu.
+    </p>
+  </section>
+
+  <script>
+    const seuNumeroWhatsapp = "5562999085678";
+
+    let selectedFood = "";
+    let selectedDate = "";
+    let selectedTime = "";
+
+    let noAttempts = 0;
+    let lastMoveTime = 0;
+
+    const screens = [
+      "screenStart",
+      "screenQuestion",
+      "screenSurprise",
+      "screenFood",
+      "screenDate",
+      "screenWhatsapp"
+    ];
+
+    function goTo(screenId) {
+      screens.forEach(id => {
+        document.getElementById(id).classList.add("hidden");
+      });
+
+      document.getElementById(screenId).classList.remove("hidden");
+    }
+
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const answerArea = document.getElementById("answerArea");
+    const attemptText = document.getElementById("attemptText");
+
+    function moveNoButton(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      const now = Date.now();
+
+      if (now - lastMoveTime < 220) {
+        return;
+      }
+
+      lastMoveTime = now;
+      noAttempts++;
+
+      if (noAttempts >= 5) {
+        noBtn.style.display = "none";
+        yesBtn.classList.add("yes-big");
+        attemptText.innerText = "Tá bom, chega. Agora só existe uma opção 😌";
+        return;
+      }
+
+      const areaRect = answerArea.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const maxX = areaRect.width - btnRect.width;
+      const maxY = areaRect.height - btnRect.height;
+
+      const randomX = Math.max(0, Math.floor(Math.random() * maxX));
+      const randomY = Math.max(0, Math.floor(Math.random() * maxY));
+
+      noBtn.style.left = randomX + "px";
+      noBtn.style.top = randomY + "px";
+
+      const messages = [
+        "Ué... tentou clicar no não? 🤨",
+        "Não foi dessa vez 😌",
+        "O botão não está colaborando...",
+        "Ele está fugindo de você, Bia 😭"
+      ];
+
+      attemptText.innerText = messages[noAttempts - 1] || "Hmm...";
+    }
+
+    noBtn.addEventListener("pointerenter", moveNoButton);
+    noBtn.addEventListener("pointerdown", moveNoButton);
+    noBtn.addEventListener("touchstart", moveNoButton, { passive: false });
+    noBtn.addEventListener("click", moveNoButton);
+
+    function sayYes() {
+      goTo("screenSurprise");
+    }
+
+    function selectFood(button, food) {
+      selectedFood = food;
+
+      document.querySelectorAll(".food-option").forEach(btn => {
+        btn.classList.remove("selected");
+      });
+
+      button.classList.add("selected");
+    }
+
+    function confirmFood() {
+      if (!selectedFood) {
+        alert("Escolhe um lugar primeiro, Bia 😭");
+        return;
+      }
+
+      goTo("screenDate");
+    }
+
+    function formatDate(dateString) {
+      const [year, month, day] = dateString.split("-");
+      return `${day}/${month}/${year}`;
+    }
+
+    function finishDate() {
+      const dateInput = document.getElementById("dateInput").value;
+      const timeInput = document.getElementById("timeInput").value;
+
+      if (!dateInput || !timeInput) {
+        alert("Tem que escolher o dia e o horário 😌");
+        return;
+      }
+
+      selectedDate = dateInput;
+      selectedTime = timeInput;
+
+      const prettyDate = formatDate(selectedDate);
+
+      const summaryHTML = `
+        <strong>Resumo oficial do date:</strong><br>
+        💖 Resposta: <strong>sim</strong><br>
+        🍽️ Lugar: <strong>${selectedFood}</strong><br>
+        📅 Dia: <strong>${prettyDate}</strong><br>
+        🕒 Horário: <strong>${selectedTime}</strong>
+      `;
+
+      document.getElementById("summaryBox").innerHTML = summaryHTML;
+
+      const message =
+`Oi, Daniel 💖
+
+Eu aceitei o date!
+
+🍽️ Lugar: ${selectedFood}
+📅 Dia: ${prettyDate}
+🕒 Horário: ${selectedTime}
+
+Agora oficialmente temos um date marcado 😌`;
+
+      const whatsappURL =
+        `https://wa.me/${seuNumeroWhatsapp}?text=${encodeURIComponent(message)}`;
+
+      document.getElementById("whatsappBtn").href = whatsappURL;
+
+      goTo("screenWhatsapp");
+    }
+
+    function createFlower() {
+      const flower = document.createElement("div");
+      flower.className = "flower";
+
+      const flowers = ["🌸", "💮", "🌷", "💖", "✨"];
+      flower.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+
+      flower.style.left = Math.random() * window.innerWidth + "px";
+      flower.style.animationDuration = Math.random() * 4 + 5 + "s";
+      flower.style.fontSize = Math.random() * 14 + 14 + "px";
+
+      document.body.appendChild(flower);
+
+      setTimeout(() => {
+        flower.remove();
+      }, 9000);
+    }
+
+    setInterval(createFlower, 450);
+  </script>
+
+</body>
+</html>
